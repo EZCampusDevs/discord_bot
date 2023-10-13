@@ -31,6 +31,7 @@ from . import constants
 from . import data_util
 from . import bot_util
 from . import bot_cogs
+from . import ezcampus_api
 
 
 def get_and_prase_args(args):
@@ -56,9 +57,11 @@ def get_and_prase_args(args):
     return parser.parse_args(args)
 
 
-async def _main(token: str, prefix: str):
+async def _main(token: str, prefix: str, testing_guild_id:int|None=None):
 
     async with ClientSession() as our_client:
+        
+        ezcampus_api.Search.instance(our_client)
 
         exts = bot_cogs.ALL_COGS
 
@@ -70,6 +73,7 @@ async def _main(token: str, prefix: str):
             web_client=our_client,
             cogs_to_load=exts,
             intents=intents,
+            testing_guild_id=testing_guild_id,
             command_prefix=prefix
         ) as bot:
             await bot.start(token)
@@ -101,11 +105,12 @@ def main():
     logging.info(f"Logging to {log_path}")
 
     token = os.getenv("BOT_TOKEN")
+    test_guild_id = os.getenv("TESTING_GUILD_ID", None)
     prefix = ".."
 
     try:
 
-        asyncio.run(_main(token, prefix))
+        asyncio.run(_main(token, prefix, testing_guild_id=test_guild_id))
         
     except KeyboardInterrupt:
         logging.error("Keyboard interrupt. Exiting...")

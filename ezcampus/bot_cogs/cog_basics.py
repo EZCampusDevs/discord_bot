@@ -15,17 +15,31 @@
 
 import logging
 
+import discord
 from discord.ext import commands
 
+from . import BaseCog
 
-from . cog_base import BaseCog
-from . cog_test import TestCog
-from . cog_basics import BasicsCog
-from . cog_search import SearchCog
+class BasicsCog(BaseCog):
+    
+    def setup(self) -> None:
+
+        self.INVITE_URL = f"https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&permissions={self.bot.BOT_PERMISSION_NUMBER}&scope=bot"
 
 
-ALL_COGS = [
-    TestCog,
-    BasicsCog,
-    SearchCog
-]
+    @commands.hybrid_command(
+            name='invite', 
+            aliases=['getinvite'],
+            description="Get an invite link for the bot")
+    async def invite_(self, ctx: commands.Context): 
+
+        embed = discord.Embed(color = self.bot.EMBED_STANDARD_COLOR)
+        
+        embed.add_field(
+            name="Invite Link", 
+            value=f"You can invite me to servers using the following [Link]({self.INVITE_URL})")
+
+        await ctx.send(embed=embed)
+
+
+

@@ -13,19 +13,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import logging
+EZCAMPUS_API_BASE = "https://api.ezcampus.org/"
 
-from discord.ext import commands
-
-
-from . cog_base import BaseCog
-from . cog_test import TestCog
-from . cog_basics import BasicsCog
-from . cog_search import SearchCog
-
-
-ALL_COGS = [
-    TestCog,
-    BasicsCog,
-    SearchCog
-]
+from . search import Search

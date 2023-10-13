@@ -25,6 +25,12 @@ import aiohttp
 from . import bot_cogs
 
 class BotClient(commands.Bot):
+    
+    EMBED_STANDARD_COLOR = 0xBCD0F7
+    
+    BOT_PERMISSION_NUMBER = 2147502080
+
+    
     def __init__(
         self,
         *args,
@@ -63,6 +69,8 @@ class BotClient(commands.Bot):
 
 
         if self.testing_guild_id:
+            
+            logging.info(f"Setting testing guild to {self.testing_guild_id}")
 
             guild = discord.Object(self.testing_guild_id)
 

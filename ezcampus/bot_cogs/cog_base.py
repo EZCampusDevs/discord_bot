@@ -29,15 +29,20 @@ class BaseCog(commands.Cog):
     
     def __init__(self, bot: "BotClient") -> None:
         self.bot: "BotClient" = bot
+        
+        self.setup()
+
+    def setup(self) -> None:
+        """ Called inside __init__ """
 
     def shutdown(self) -> None:
         """ Perform cleanup """
     
-    async def cog_check(self, ctx):
+    async def cog_check(self, ctx: commands.Context):
         """A local check which applies to all commands in this cog."""
         return True
 
-    async def cog_command_error(self, ctx, error):
+    async def cog_command_error(self, ctx: commands.Context, error):
         """A local error handler for all errors arising from commands in this cog."""
 
         logging.error(error, exc_info=True)

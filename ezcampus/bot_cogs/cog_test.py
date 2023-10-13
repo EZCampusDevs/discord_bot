@@ -21,7 +21,7 @@ from . import BaseCog
 
 class TestCog(BaseCog):
     
-    @commands.command(name='ping', aliases=['ping2'])
-    async def invite_(self, ctx): 
+    @commands.command(name='ping')
+    async def ping_(self, ctx: commands.Context): 
 
         await ctx.send("pong")
