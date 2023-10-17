@@ -16,3 +16,4 @@
 EZCAMPUS_API_BASE = "https://api.ezcampus.org/"
 
 from . search import Search
+from . user import User

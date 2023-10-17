@@ -62,11 +62,12 @@ async def _main(token: str, prefix: str, testing_guild_id:int|None=None):
     async with ClientSession() as our_client:
         
         ezcampus_api.Search.instance(our_client)
+        ezcampus_api.User.instance(our_client)
 
         exts = bot_cogs.ALL_COGS
 
         intents = discord.Intents.default()
-        
+        intents.members = True
         intents.message_content = True
 
         async with bot_util.BotClient(

@@ -34,6 +34,9 @@ class BaseCog(commands.Cog):
 
     def setup(self) -> None:
         """ Called inside __init__ """
+        
+    def post_setup(self) -> None:
+        """ Called when bot connects """
 
     def shutdown(self) -> None:
         """ Perform cleanup """
@@ -44,5 +47,9 @@ class BaseCog(commands.Cog):
 
     async def cog_command_error(self, ctx: commands.Context, error):
         """A local error handler for all errors arising from commands in this cog."""
+        
+        if isinstance(error, commands.errors.PrivateMessageOnly):
+
+            return await ctx.send("This command can only be used in Direct Messages!")
 
         logging.error(error, exc_info=True)

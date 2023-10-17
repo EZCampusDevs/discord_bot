@@ -15,21 +15,23 @@
 
 import logging
 
+import discord
 from discord.ext import commands
 
+from . import BaseCog
 
-from . cog_base import BaseCog
-from . cog_bot_events import BotEventCog
-from . cog_test import TestCog
-from . cog_basics import BasicsCog
-from . cog_search import SearchCog
-from . cog_fyic import FYICCog
+class BotEventCog(BaseCog):
+    
+    """
+    
+    Handles Bot Events
+    
+    """
+    
+    @commands.Cog.listener()
+    async def on_ready(self):
 
-
-ALL_COGS = [
-    BotEventCog,
-    TestCog,
-    BasicsCog,
-    SearchCog,
-    FYICCog
-]
+        logging.info("Bot is ready!")
+        
+        await self.bot.post_setup()
+    

@@ -28,7 +28,7 @@ class BotClient(commands.Bot):
     
     EMBED_STANDARD_COLOR = 0xBCD0F7
     
-    BOT_PERMISSION_NUMBER = 2147502080
+    BOT_PERMISSION_NUMBER = 1102128924672 # 2147502080
 
     
     def __init__(
@@ -48,6 +48,19 @@ class BotClient(commands.Bot):
         self.cogs_to_load: list[bot_cogs.BaseCog] = cogs_to_load
 
         self.loaded_cogs: list[bot_cogs.BaseCog] = []
+        
+    async def post_setup(self) -> None:
+        
+        for cog in self.loaded_cogs:
+
+            try:
+
+                cog.post_setup()
+
+            except Exception as e:
+
+                logging.error(e, stack_info=True)
+                logging.error(f"Could not load cog {cog}")
 
     async def setup_hook(self) -> None:
 
@@ -64,8 +77,8 @@ class BotClient(commands.Bot):
 
             except Exception as e:
 
-                logging.error(f"Could not load cog {extension}")
                 logging.error(e, stack_info=True)
+                logging.error(f"Could not load cog {extension}")
 
 
         if self.testing_guild_id:
