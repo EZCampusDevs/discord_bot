@@ -81,11 +81,12 @@ class FYICCog(BaseCog):
         logging.info(f"User {guild_member} is logging in with user {username}")
         
         session = await ezcampus_api.User.instance().login(username, password) 
-        session.access_token = "" # we don't need this
         
         if session is None:
             
             return await ctx.send("Could not login! There was an error.")
+
+        session.access_token = "" # we don't need this
 
         try:
             
