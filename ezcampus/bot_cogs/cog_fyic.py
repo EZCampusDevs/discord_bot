@@ -86,7 +86,22 @@ class FYICCog(BaseCog):
             
             return await ctx.send("Could not login! There was an error.")
 
-        session.access_token = "" # we don't need this
+        user_info = await ezcampus_api.User.instance().get_information(session.token_type, session.access_token)
+
+        session.access_token = "" # we don't need this anymore
+
+        if user_info is None:
+            
+            return await ctx.send("Could fetch user info! There was an error.")
+        
+
+        leader_ship = 3 
+        sustainability = 4
+        vpx = 5
+
+        if user_info.account_status not in (leader_ship, sustainability, vpx):
+
+            return await ctx.send("You are not able to attend this event!")
 
         try:
             

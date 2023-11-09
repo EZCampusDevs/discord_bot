@@ -29,6 +29,20 @@ class BotClient(commands.Bot):
     EMBED_STANDARD_COLOR = 0xBCD0F7
     
     BOT_PERMISSION_NUMBER = 1102128924672 # 2147502080
+    
+    """
+    1102128924672 gives:
+
+    Manage Roles
+    Change Nickname
+    Manage Nicknames
+    Moderate Members
+    Embed Links
+    Attach Files
+    Use Slash Commands
+    Send Messages
+    
+    """
 
     
     def __init__(

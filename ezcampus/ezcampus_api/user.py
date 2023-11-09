@@ -24,6 +24,23 @@ class LoginData:
     token_type: str
     username: str
     
+@dataclass
+class UserInfo:
+    username: str 
+    email: str 
+    password: str
+    name: str
+    description: str
+    school_short_name: str
+    program: str
+    year_of_study: int
+    is_private: bool
+    is_suspended: bool 
+    account_status: int
+    schedule_tag: str
+    created_at: str
+    hashed_password: str
+
 
 class User():
     """
@@ -33,6 +50,7 @@ class User():
     EZCAMPUS_USER_API_BASE = "https://api.ezcampus.org/user/"
     POST_CREATE_USER= f"{EZCAMPUS_USER_API_BASE}create"
     POST_LOGIN_USER= f"{EZCAMPUS_USER_API_BASE}login"
+    GET_USER_INFO = f"{EZCAMPUS_USER_API_BASE}info"
     
     __INSTANCE = None
     
@@ -46,6 +64,24 @@ class User():
             User.__INSTANCE = User(client)
             
         return User.__INSTANCE
+    
+
+    async def get_information(self, token_type: str, auth_token: str):
+        
+        headers = {
+            "Authorization" : f"{token_type} {auth_token}"
+        }
+
+        async with self.session.get(self.GET_USER_INFO, headers=headers) as response:
+            
+            if response.status != 200:
+
+                logging.info(await response.text())
+
+                return None
+            
+            return UserInfo(**await response.json())
+
     
     async def login(self, username: str, password: str):
         
@@ -122,18 +158,25 @@ if __name__ == "__main__":
     import asyncio
     
     async def main():
-
+        
         async with aiohttp.ClientSession() as session:
             
+            User.instance(session)
             username = "test_user_2"
             password = "password123"
             email    = "email@gmail.com"
 
-            print(await User.instance(session).create(
-                username, password, email, 3
-            ))
+            print(f"trying to create using with name {username}")
+            # print(await User.instance(session).create(
+            #     username, password, email, 3
+            # ))
             
-            print(await User.instance().login(username, password))
+            print(f"trying to login with user")
+            usr =await User.instance().login(username, password)
+            
+            print(usr)
+            
+            print(await User.instance().get_information(usr.token_type, usr.access_token))
     
 
     asyncio.run(main())
