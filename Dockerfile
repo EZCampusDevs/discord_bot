@@ -1,4 +1,4 @@
-FROM python:3-alpine
+FROM python:3.10-alpine
 
 RUN addgroup discord_bot && adduser -D -G  discord_bot discord_bot
 
