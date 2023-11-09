@@ -47,6 +47,102 @@ BOT_TOKEN="${DISCORD_TOKEN}"
                                     excludes: '',
                                     execCommand: '''
                                     cd ~/pipeline_discord_bot
+                                    
+                                    log_dir="$HOME/log/jenkins-ssh"
+                                    mkdir -p $log_dir
+                            
+                                    log_file="$log_dir/pipeline_discord_deploy.out"
+                                    touch $log_file
+                            
+                                    exec 3>&1 4>&2
+                                    trap 'exec 2>&4 1>&3' 0 1 2 3
+                                    exec 1>$log_file 2>&1
+                                    
+
+                                    
+                                   
+                                    docker build -t ezcampus_discord_bot .
+                                    rm -f ./.env
+                                            
+                                            
+                                            
+                                    is_container_running() {
+                                       
+                                        container_name="$1"
+                                    
+                                        if [ "$(docker inspect -f '{{.State.Running}}' "$container_name" 2>/dev/null)" = "true" ]; then
+                                    
+                                          return 0
+                                    
+                                       else 
+                                    
+                                          return 1
+                                    
+                                       fi
+                                    
+                                    }
+                                        
+                                    kill_and_wait_until_container_stopped() {
+                                    
+                                       container_name="$1"
+                                    
+                                       while is_container_running $container_name; do
+                                    
+                                          docker stop "$container_name" || true
+                                    
+                                          echo "Waiting for container to stop..."
+                                    
+                                          sleep 1
+                                       done
+                                    }
+                                        
+                                    new_container() {
+                                    
+                                        container="$1"
+                                        num="$2"
+                                        kill_num="$3"
+                                        
+                                        
+                                        if ! is_container_running "${container}_${num}"; then
+                                        
+                                            echo "Starting docker container ${num}"
+
+                                            docker run -itd \
+                                                --network EZnet \
+                                                --name "${container}_${num}" \
+                                                ezcampus_discord_bot
+                                                
+                                            echo "Docker container ${num} started, waiting 15 seconds of grace..."
+                                            
+                                            sleep 15
+                                        
+                                            echo "Killing container ${kill_num}"
+                                            
+                                            kill_and_wait_until_container_stopped "${container}_${kill_num}"
+                                            
+                                            return 0
+                                        
+                                        fi
+                                        
+                                        return 1
+                                        
+                                    }
+
+
+
+                                    container="discord_bot_prod"
+
+                                    if ! new_container "$container" "a" "b"; then
+                                    
+                                        if ! new_container "$container" "b" "a"; then
+                                        
+                                            exit 1
+                                            
+                                        fi
+                                    
+                                    fi                                   
+
+                                    
                                     ''',
                                     execTimeout: 120000,
                                     flatten: false,
@@ -56,7 +152,7 @@ BOT_TOKEN="${DISCORD_TOKEN}"
                                     remoteDirectory: 'pipeline_discord_bot',
                                     remoteDirectorySDF: false, 
                                     removePrefix: '', 
-                                    sourceFiles: 'Dockerfile, requirements.txt, .env, entrypoint.sh, ezcampus/**')
+                                    sourceFiles: 'Dockerfile, requirements.txt, .env, entrypoint.sh, ezcampus/**/*')
                                 ], 
                             usePromotionTimestamp: false,
                             useWorkspaceInPromotion: false,

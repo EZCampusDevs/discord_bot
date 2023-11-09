@@ -7,6 +7,7 @@ WORKDIR /home/discord_bot
 COPY ./ezcampus ./ezcampus
 COPY ./requirements.txt .
 COPY ./entrypoint.sh .
+COPY ./.env ./ezcampus/.env
 
 RUN chmod +x ./entrypoint.sh
 
