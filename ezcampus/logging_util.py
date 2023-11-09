@@ -17,9 +17,6 @@ import logging
 import os
 import sys
 
-from fastapi import HTTPException, Request
-from fastapi.responses import FileResponse
-
 from . import constants
 
 __loggers__: set[str] = set()
@@ -116,8 +113,3 @@ def add_unhandled_exception_hook(replace=False):
             sys.__excepthook__(exc_type, exc_value, exc_traceback)
 
     sys.excepthook = handle_unhandled_exception
-
-
-def log_endpoint(h: HTTPException | FileResponse, r: Request, msg: str = ""):
-    """Log general endpoint."""
-    logging.info(f"{r.method} {r.scope['path']} {h.status_code} {msg}")
