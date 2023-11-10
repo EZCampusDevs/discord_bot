@@ -210,7 +210,7 @@ class FYICCog(BaseCog):
                     "Could not give you the VPX role. Something has gone wrong!")
         try:
 
-            await guild_member.edit(nick=session.username)
+            await guild_member.edit(nick=user_info.name)
 
         except discord.Forbidden:
 
