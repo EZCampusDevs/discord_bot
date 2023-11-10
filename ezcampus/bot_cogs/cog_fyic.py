@@ -35,6 +35,9 @@ class FYICCog(BaseCog):
     
     FYIC_GUILD_ID: int = 1161735662249201707
     VERIFIED_ROLE_ID: int = 1161736593304998009
+    LEADERSHIP_STREAM_ROLE_ID: int = 1172093916917551134
+    SUSTAINABILITY_STREAM_ROLE_ID: int = 1172093946864869476
+    VPX_STREAM_ROLE_ID: int = 1172093875876286504
     fyic_guild = None
     
     def post_setup(self) -> None:
@@ -125,7 +128,86 @@ class FYICCog(BaseCog):
             logging.error(f"Could not give {guild_member} a role!")
             
             return await ctx.send("Could not give you the verified role. Something has gone wrong!")
-        
+
+        if user_info.account_status == leader_ship:
+            try:
+
+                role = self.fyic_guild.get_role(self.LEADERSHIP_STREAM_ROLE_ID)
+
+                if not role:
+                    return await ctx.send(
+                        "Could not give you the verified role. The role does not exist! Please let the commity team know!")
+
+                await guild_member.add_roles(role, reason="The user verified with EZCampus",
+                                             atomic=True)
+
+                await ctx.send(f"You have been verified as {session.username}!")
+
+            except discord.Forbidden:
+
+                return await ctx.send(
+                    "I don't have permission to give you role. Please let the commity team know!")
+
+            except Exception as e:
+
+                logging.error(e, stack_info=True)
+                logging.error(f"Could not give {guild_member} a role!")
+
+                return await ctx.send("Could not give you the verified role. Something has gone wrong!")
+
+        if user_info.account_status == sustainability:
+            try:
+
+                role = self.fyic_guild.get_role(self.SUSTAINABILITY_STREAM_ROLE_ID)
+
+                if not role:
+                    return await ctx.send(
+                        "Could not give you the verified role. The role does not exist! Please let the commity team know!")
+
+                await guild_member.add_roles(role, reason="The user verified with EZCampus",
+                                             atomic=True)
+
+                await ctx.send(f"You have been verified as {session.username}!")
+
+            except discord.Forbidden:
+
+                return await ctx.send(
+                    "I don't have permission to give you role. Please let the commity team know!")
+
+            except Exception as e:
+
+                logging.error(e, stack_info=True)
+                logging.error(f"Could not give {guild_member} a role!")
+
+                return await ctx.send(
+                    "Could not give you the verified role. Something has gone wrong!")
+
+        if user_info.account_status == vpx:
+            try:
+
+                role = self.fyic_guild.get_role(self.VPX_STREAM_ROLE_ID)
+
+                if not role:
+                    return await ctx.send(
+                        "Could not give you the verified role. The role does not exist! Please let the commity team know!")
+
+                await guild_member.add_roles(role, reason="The user verified with EZCampus",
+                                             atomic=True)
+
+                await ctx.send(f"You have been verified as {session.username}!")
+
+            except discord.Forbidden:
+
+                return await ctx.send(
+                    "I don't have permission to give you role. Please let the commity team know!")
+
+            except Exception as e:
+
+                logging.error(e, stack_info=True)
+                logging.error(f"Could not give {guild_member} a role!")
+
+                return await ctx.send(
+                    "Could not give you the verified role. Something has gone wrong!")
         try:
 
             await guild_member.edit(nick=session.username)
