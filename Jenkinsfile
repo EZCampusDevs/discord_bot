@@ -107,7 +107,7 @@ BOT_TOKEN="${DISCORD_TOKEN}"
                                         
                                             echo "Starting docker container ${num}"
 
-                                            docker run -itd \
+                                            docker run -itd --rm \
                                                 --network EZnet \
                                                 --name "${container}_${num}" \
                                                 ezcampus_discord_bot
