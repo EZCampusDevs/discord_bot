@@ -28,7 +28,6 @@ class LoginData:
 class UserInfo:
     username: str 
     email: str 
-    password: str
     name: str
     description: str
     school_short_name: str
@@ -39,7 +38,6 @@ class UserInfo:
     account_status: int
     schedule_tag: str
     created_at: str
-    hashed_password: str
 
 
 class User():
