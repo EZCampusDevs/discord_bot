@@ -112,7 +112,7 @@ class FYICCog(BaseCog):
             
             if not role:
 
-                return await ctx.send("Could not give you the verified role. The role does not exist! Please let the commity team know!")
+                return await ctx.send("Could not give you the Verified role. The role does not exist! Please let the organizing committee team know!")
 
             await guild_member.add_roles(role, reason="The user verified with EZCampus", atomic=True)
 
@@ -120,14 +120,14 @@ class FYICCog(BaseCog):
 
         except discord.Forbidden:
 
-            return await ctx.send("I don't have permission to give you role. Please let the commity team know!")
+            return await ctx.send("I don't have permission to give you the Verified role. Please let the organizing committee team know!")
 
         except Exception as e:
 
             logging.error(e, stack_info=True)
             logging.error(f"Could not give {guild_member} a role!")
             
-            return await ctx.send("Could not give you the verified role. Something has gone wrong!")
+            return await ctx.send("Could not give you the Verified role. Something has gone wrong!")
 
         if user_info.account_status == leader_ship:
             try:
@@ -136,24 +136,24 @@ class FYICCog(BaseCog):
 
                 if not role:
                     return await ctx.send(
-                        "Could not give you the verified role. The role does not exist! Please let the commity team know!")
+                        "Could not give you the Leadership role. The role does not exist! Please let the organizing committee team know!")
 
                 await guild_member.add_roles(role, reason="The user verified with EZCampus",
                                              atomic=True)
 
-                await ctx.send(f"You have been verified as {session.username}!")
+                await ctx.send(f"You have been verified for the Leadership stream role!")
 
             except discord.Forbidden:
 
                 return await ctx.send(
-                    "I don't have permission to give you role. Please let the commity team know!")
+                    "I don't have permission to give you the Leadership role. Please let the organizing committee team know!")
 
             except Exception as e:
 
                 logging.error(e, stack_info=True)
                 logging.error(f"Could not give {guild_member} a role!")
 
-                return await ctx.send("Could not give you the verified role. Something has gone wrong!")
+                return await ctx.send("Could not give you the Leadership role. Something has gone wrong!")
 
         if user_info.account_status == sustainability:
             try:
@@ -162,17 +162,17 @@ class FYICCog(BaseCog):
 
                 if not role:
                     return await ctx.send(
-                        "Could not give you the verified role. The role does not exist! Please let the commity team know!")
+                        "Could not give you the Sustainability role. The role does not exist! Please let the organizing committee team know!")
 
                 await guild_member.add_roles(role, reason="The user verified with EZCampus",
                                              atomic=True)
 
-                await ctx.send(f"You have been verified as {session.username}!")
+                await ctx.send(f"You have been verified for the Sustainability stream role!")
 
             except discord.Forbidden:
 
                 return await ctx.send(
-                    "I don't have permission to give you role. Please let the commity team know!")
+                    "I don't have permission to give you the Sustainability role. Please let the organizing committee team know!")
 
             except Exception as e:
 
@@ -180,7 +180,7 @@ class FYICCog(BaseCog):
                 logging.error(f"Could not give {guild_member} a role!")
 
                 return await ctx.send(
-                    "Could not give you the verified role. Something has gone wrong!")
+                    "Could not give you the Sustainability role. Something has gone wrong!")
 
         if user_info.account_status == vpx:
             try:
@@ -189,17 +189,17 @@ class FYICCog(BaseCog):
 
                 if not role:
                     return await ctx.send(
-                        "Could not give you the verified role. The role does not exist! Please let the commity team know!")
+                        "Could not give you the VPX role. The role does not exist! Please let the organizing committee team know!")
 
                 await guild_member.add_roles(role, reason="The user verified with EZCampus",
                                              atomic=True)
 
-                await ctx.send(f"You have been verified as {session.username}!")
+                await ctx.send(f"You have been verified for the VPX stream role!")
 
             except discord.Forbidden:
 
                 return await ctx.send(
-                    "I don't have permission to give you role. Please let the commity team know!")
+                    "I don't have permission to give you the VPX role. Please let the organizing committee team know!")
 
             except Exception as e:
 
@@ -207,14 +207,14 @@ class FYICCog(BaseCog):
                 logging.error(f"Could not give {guild_member} a role!")
 
                 return await ctx.send(
-                    "Could not give you the verified role. Something has gone wrong!")
+                    "Could not give you the VPX role. Something has gone wrong!")
         try:
 
             await guild_member.edit(nick=session.username)
 
         except discord.Forbidden:
 
-            return await ctx.send("I don't have permission to change your nickname. Please let the commity team know!")
+            return await ctx.send("I don't have permission to change your nickname. Please let the organizing committee team know!")
 
         except Exception as e:
 
