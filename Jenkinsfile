@@ -41,7 +41,7 @@ BOT_TOKEN="${DISCORD_TOKEN}"
                             failOnError: true,
                             publishers: [
                             sshPublisherDesc(
-                                configName: '2GB_Glassfish_VPS',
+                                configName: "${SSH_SERVER}",
                                 transfers: [
                                 sshTransfer(cleanRemote: true,
                                     excludes: '',
